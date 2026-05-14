@@ -16,7 +16,8 @@ export default function Select() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const isWeb = width >= 768;
-  const cardSize = isWeb ? 180 : (width - 72) / 2;
+  // garante 2 cards por linha em qualquer mobile
+  const cardSize = isWeb ? 180 : Math.floor((width - 40 - 40 - 12) / 2) - 8;
 
   return (
     <GreenBackground>
