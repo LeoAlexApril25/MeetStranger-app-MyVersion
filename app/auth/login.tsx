@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { GreenBackground } from '../../components/GreenBackground';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function Login() {
   const router = useRouter();

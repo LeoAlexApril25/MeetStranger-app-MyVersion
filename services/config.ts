@@ -1,10 +1,10 @@
 import { ExpoRoot } from "expo-router"
 
 export const API_CONFIG = {
-    BASE_URL: 'MEU SERVIDOR BACKEND',
-    SOCKET_URL:' MEU SERVIDOR SEM O PREFIXO /API',
+     BASE_URL: 'https://meetstranger-backend.onrender.com/api',
+    SOCKET_URL: 'https://meetstranger-backend.onrender.com',
     TIMEOUT: 60000
-}
+};
 
 export interface apiResponse <t = any> {
     success: boolean;
