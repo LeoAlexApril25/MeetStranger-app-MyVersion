@@ -67,7 +67,7 @@ import { wsService } from "../services/websocket";
         const initializeWebSocket = async () => {
             try{
 
-                if(!wsService.connect){
+                if(!wsService.connected){
                     await wsService.connect();
                 }
 
@@ -102,7 +102,7 @@ import { wsService } from "../services/websocket";
 
          const sendMessage = async (text: string) => {
 
-            if (!text.trim() || !currentRoomId) return;
+            if (!text.trim()) return;
 
             const newMessage : ChatMessage = {
                 id: Date.now().toString(),
@@ -112,33 +112,38 @@ import { wsService } from "../services/websocket";
                 UserName: 'Você'
             };
 
-            setMessages( prev => [...prev, newMessage]);
+            // Sempre adiciona localmente, independente do WebSocket
+            setMessages(prev => [...prev, newMessage]);
 
-            try{
-
-                wsService.sendMessage(currentRoomId, text.trim());
-            } catch (error) {
-            
-                console.log('Error sending message:', error);
+            // Só envia pelo WebSocket se tiver sala ativa
+            if (currentRoomId) {
+                try {
+                    wsService.sendMessage(currentRoomId, text.trim());
+                } catch (error) {
+                    console.log('Error sending message:', error);
+                }
             }
-            
          };
 
          const findNewPartner = async () => {
 
             if (currentRoomId){
-                wsService.leaveRoom(currentRoomId);
+                try { wsService.leaveRoom(currentRoomId); } catch {}
             }
-
 
             setIsConnected(false);
             setMatching(true);
             setMessages([]);
             setCurrentRoomId(null);
-            setPartnerName('Procurando...')
-            
-            try{
-                wsService.findMatch(category);
+            setPartnerName('Procurando...');
+
+            try {
+                if (wsService.connected) {
+                    wsService.findMatch(category);
+                } else {
+                    await wsService.connect();
+                    wsService.findMatch(category);
+                }
             } catch (error) {
                 console.error('Error finding match:', error);
                 setMatching(false);

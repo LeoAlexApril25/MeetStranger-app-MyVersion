@@ -28,6 +28,7 @@ export function AuthProvider({children}: {children:ReactNode}){
             await wsService.connect();
         } catch (error) {
             console.log('Not authenticated')
+        } finally {
             setLoading(false);
         }
     }

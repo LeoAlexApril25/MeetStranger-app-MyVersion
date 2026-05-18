@@ -2,14 +2,23 @@ import { useRouter } from 'expo-router';
 import { Button } from '../components/button';
 import { GreenBackground } from '../components/GreenBackground';
 import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+import { useAuth } from '../hooks/useAuth';
+import { useEffect } from 'react';
 
 export default function Welcome() {
   const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
   const { width } = useWindowDimensions();
   const isWeb = width >= 768;
   const isSmall = width < 375;
   const logoSize = isWeb ? 150 : Math.min(width * 0.35, 120);
   const p = isSmall ? 16 : 24;
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.replace('/home');
+    }
+  }, [isAuthenticated, isLoading]);
 
   return (
     <GreenBackground>

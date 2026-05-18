@@ -96,9 +96,9 @@ export default function ChatRoom() {
               onSubmitEditing={handleSendMessage}
             />
             <TouchableOpacity
-              style={[styles.sendBtn, (!isConnected || inputText.trim() === '') && styles.sendBtnDisabled]}
+              style={[styles.sendBtn, (inputText.trim() === '') && styles.sendBtnDisabled]}
               onPress={handleSendMessage}
-              disabled={!isConnected || inputText.trim() === ''}
+              disabled={inputText.trim() === ''}
               activeOpacity={0.75}
             >
               <Text style={styles.sendBtnText}>Enviar</Text>

@@ -1,5 +1,4 @@
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView, useWindowDimensions } from 'react-native';
-import {useAuth} from '../../hooks/useAuth';
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { GreenBackground } from '../../components/GreenBackground';

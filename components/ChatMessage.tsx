@@ -14,7 +14,7 @@ export function ChatMessage({ message }: ChatBubbleProps){
      return (
         <DSChatBubble
              message={message.text}
-             position={message ? 'right' : 'left'}
+             position={message.isUser ? 'right' : 'left'}
              timestamp={formatTime(message.timestamp)}
              username={message.UserName}
              showUsername={!message.isUser}
